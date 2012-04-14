@@ -1,3 +1,5 @@
+#pragma once
+
 #include <thrust/iterator/iterator_traits.h>
 #include <newton/detail/type_traits.hpp>
 
@@ -5,6 +7,73 @@ namespace newton
 {
 namespace detail
 {
+
+template<typename Range>
+inline __host__ __device__
+  typename newton::detail::range_iterator<Range>::type
+    begin(Range &rng)
+{
+  return rng.begin();
+}
+
+template<typename Range>
+inline __host__ __device__
+  typename range_iterator<const Range>::type
+    begin(const Range &rng)
+{
+  return rng.begin();
+}
+
+template<typename Range>
+inline __host__ __device__
+  typename range_iterator<Range>::type
+    end(Range &rng)
+{
+  return rng.end();
+}
+
+template<typename Range>
+inline __host__ __device__
+  typename range_iterator<const Range>::type
+    end(const Range &rng)
+{
+  return rng.end();
+}
+
+
+// helpers to dispatch begin & end via adl
+// when in the presence of a similarly-named overload
+template<typename Range>
+inline __host__ __device__
+  typename range_iterator<Range>::type
+    adl_begin(Range &rng)
+{
+  return begin(rng);
+}
+
+template<typename Range>
+inline __host__ __device__
+  typename range_iterator<const Range>::type
+    adl_begin(const Range &rng)
+{
+  return begin(rng);
+}
+
+template<typename Range>
+inline __host__ __device__
+  typename range_iterator<Range>::type
+    adl_end(Range &rng)
+{
+  return end(rng);
+}
+
+template<typename Range>
+inline __host__ __device__
+  typename range_iterator<const Range>::type
+    adl_end(const Range &rng)
+{
+  return end(rng);
+}
 
 // XXX specialize for RandomAccessIterator
 //     to avoid storing two iterators
@@ -22,11 +91,18 @@ template<typename Iterator>
       : m_begin(first), m_end(last)
     {}
 
-    template<Range>
+    template<typename Range>
+    inline __host__ __device__
+    range(Range &rng)
+      : m_begin(adl_begin(rng)),
+        m_end(adl_end(rng))
+    {}
+
+    template<typename Range>
     inline __host__ __device__
     range(const Range &rng)
-      : m_begin(begin(rng)),
-        m_end(end(rng))
+      : m_begin(adl_begin(rng)),
+        m_end(adl_end(rng))
     {}
 
     inline __host__ __device__
@@ -63,25 +139,11 @@ template<typename Iterator>
     iterator m_begin, m_end;
 };
 
-template<typename Iterator>
-__host__ __device__
-begin(const range<Iterator> &rng)
-{
-  return rng.begin();
-}
-
-template<typename Iterator>
-__host__ __device__
-end(const range<Iterator> &rng)
-{
-  return rng.end();
-}
-
 // specialize range_iterator for const range<Iterator>
 template<typename Iterator>
   struct range_iterator<const range<Iterator> >
 {
-  typedef range<Iterator>::iterator type;
+  typedef typename range<Iterator>::iterator type;
 };
 
 template<typename Iterator>
@@ -95,14 +157,14 @@ template<typename Range>
 __host__ __device__
 range<typename range_iterator<Range>::type> make_range(Range &rng)
 {
-  return range<typename range_iterator<range_iterator>::type>(rng);
+  return range<typename range_iterator<Range>::type>(rng);
 }
 
 template<typename Range>
 __host__ __device__
 range<typename range_iterator<const Range>::type> make_range(const Range &rng)
 {
-  return range<typename range_iterator<const range_iterator>::type>(rng);
+  return range<typename range_iterator<const Range>::type>(rng);
 }
 
 } // end detail

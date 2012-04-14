@@ -12,14 +12,22 @@ template<typename Iterator>
     typedef newton::detail::range<Iterator> super_t;
 
   public:
+    typedef typename super_t::iterator iterator;
+
     inline __host__ __device__
     numeric_range(iterator first, iterator last)
-      : super_t(first,last);
+      : super_t(first,last)
     {}
 
-    template<Range>
+    template<typename Range>
     inline __host__ __device__
-    range(const Range &rng)
+    numeric_range(Range &rng)
+      : super_t(rng)
+    {}
+
+    template<typename Range>
+    inline __host__ __device__
+    numeric_range(const Range &rng)
       : super_t(rng)
     {}
 };

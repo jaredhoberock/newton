@@ -1,3 +1,5 @@
+#pragma once
+
 namespace newton
 {
 namespace detail
@@ -6,13 +8,13 @@ namespace detail
 template<typename Range>
   struct range_iterator
 {
-  typename Range::iterator type;
+  typedef typename Range::iterator type;
 };
 
-template<typename Range>
-  struct range_iterator<const Range>
+template<typename Container>
+  struct range_iterator<const Container>
 {
-  typename Range::const_iterator type;
+  typedef typename Container::const_iterator type;
 };
 
 } // end detail
