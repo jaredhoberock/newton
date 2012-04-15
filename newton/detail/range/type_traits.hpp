@@ -1,6 +1,7 @@
 #pragma once
 
 #include <thrust/detail/type_traits.h>
+#include <newton/detail/type_traits.hpp>
 
 namespace newton
 {
@@ -8,6 +9,17 @@ namespace detail
 {
 namespace type_traits_detail
 {
+
+template<typename T>
+  struct has_iterator
+{
+  typedef char yes_type;
+  typedef int  no_type;
+  template<typename S> static yes_type test(typename S::iterator *);
+  template<typename S> static no_type  test(...);
+  static bool const value = sizeof(test<T>(0)) == sizeof(yes_type);
+  typedef thrust::detail::integral_constant<bool, value> type;
+}; // end has_iterator
 
 template<typename T>
   struct has_const_iterator
@@ -44,6 +56,45 @@ template<typename Range>
 {};
 
 } // end type_traits_detail
+
+
+template<typename T>
+  struct is_range
+    : type_traits_detail::has_iterator<T>
+{};
+
+
+template<typename T, typename Result = void>
+  struct enable_if_range
+    : detail::enable_if<
+        is_range<T>::value,
+        Result
+      >
+{};
+
+template<typename T, typename Result>
+  struct lazy_enable_if_range
+    : detail::lazy_enable_if<
+        is_range<T>::value,
+        Result
+      >
+{};
+
+template<typename T, typename Result = void>
+  struct disable_if_range
+    : detail::disable_if<
+        is_range<T>::value,
+        Result
+      >
+{};
+
+template<typename T, typename Result>
+  struct lazy_disable_if_range
+    : detail::lazy_disable_if<
+        is_range<T>::value,
+        Result
+      >
+{};
 
 
 template<typename Range>
