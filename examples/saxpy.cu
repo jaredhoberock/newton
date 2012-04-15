@@ -5,16 +5,22 @@
 
 int main()
 {
-  thrust::device_vector<float> vec_x(100), vec_y(100);
+  // initialize host arrays
+  float h_vec_x[4] = {1.0, 1.0, 1.0, 1.0};
+  float h_vec_y[4] = {1.0, 2.0, 3.0, 4.0};
 
-  typedef thrust::device_vector<float> range;
+  thrust::device_vector<float> d_vec_x(h_vec_x,h_vec_x + 4);
+  thrust::device_vector<float> d_vec_y(h_vec_y,h_vec_y + 4);
 
   typedef thrust::device_vector<float>::iterator iterator;
 
-  newton::numeric_range<iterator> x = vec_x;
-  newton::numeric_range<iterator> y = vec_y;
+  // create a numeric "view" of the vectors
+  newton::numeric_range<iterator> x = d_vec_x;
+  newton::numeric_range<iterator> y = d_vec_y;
+
+  const float a = 2.0f;
   
-  x + y;
+  a * x + y;
 
   return 0;
 }
