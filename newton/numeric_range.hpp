@@ -1,6 +1,7 @@
 #pragma once
 
 #include <newton/detail/range/range.hpp>
+#include <newton/detail/numeric_range_facade.hpp>
 #include <newton/detail/range/type_traits.hpp>
 #include <newton/detail/arithmetic.hpp>
 #include <newton/detail/range/constant_range.hpp>
@@ -8,10 +9,12 @@
 namespace newton
 {
 
-// XXX assumes is_aritmetic<typename value_type<Iterator>::type>
+
+// XXX assumes is_arithmetic<typename value_type<Iterator>::type>
 template<typename Iterator>
   class numeric_range
-    : public newton::detail::range<Iterator>
+    : public newton::detail::range<Iterator>,
+      public detail::numeric_range_facade<numeric_range<Iterator> >
 {
   private:
     typedef newton::detail::range<Iterator> super_t;
@@ -52,160 +55,6 @@ inline __host__ __device__
 {
   return numeric_range<typename detail::range_iterator<const Range> >(rng);
 }
-
-// binary arithmetic operators follow
-// each operator has five versions:
-//   0. numeric_range, numeric_range
-//   1. numeric_range, generic Range
-//   2. generic Range, numeric_range
-//   3. numeric_range, arithmetic Scalar
-//   4. arithmetic Scalar, numeric_range
-
-// + case 0
-template<typename Iterator1, typename Iterator2>
-inline __host__ __device__
-  typename detail::sum_ranges_result<
-    numeric_range<Iterator1>,
-    numeric_range<Iterator2>
-  >::type
-  operator+(const numeric_range<Iterator1> &lhs, const numeric_range<Iterator2> &rhs)
-{
-  return sum_ranges(lhs,rhs);
-} // end operator+()
-
-// + case 1
-template<typename Iterator, typename Range>
-inline __host__ __device__
-  typename detail::lazy_enable_if_range<
-    Range,
-    detail::sum_ranges_result<
-      numeric_range<Iterator>,
-      Range
-    >
-  >::type
-    operator+(const numeric_range<Iterator> &lhs, const Range &rhs)
-{
-  return sum_ranges(lhs,rhs);
-} // end operator+()
-
-// + case 2
-template<typename Range, typename Iterator>
-inline __host__ __device__
-  typename detail::lazy_enable_if_range<
-    Range,
-    detail::sum_ranges_result<
-      Range,
-      numeric_range<Iterator>
-    >
-  >::type
-    operator+(const Range &lhs, const numeric_range<Iterator> &rhs)
-{
-  return sum_ranges(lhs,rhs);
-} // end operator+()
-
-
-// + case 3
-template<typename Iterator, typename Scalar>
-inline __host__ __device__
-  typename detail::lazy_disable_if_range<
-    Scalar,
-    detail::sum_ranges_result<
-      numeric_range<Iterator>,
-      detail::constant_range<Scalar>
-    >
-  >::type
-    operator+(const numeric_range<Iterator> &lhs, const Scalar &rhs)
-{
-  return sum_ranges(lhs,detail::make_constant_range(rhs,lhs.size()));
-} // end operator+()
-
-// + case 4
-template<typename Scalar, typename Iterator>
-inline __host__ __device__
-  typename detail::lazy_disable_if_range<
-    Scalar,
-    detail::sum_ranges_result<
-      detail::constant_range<Scalar>,
-      numeric_range<Iterator>
-    >
-  >::type
-    operator+(const Scalar &lhs, const numeric_range<Iterator> &rhs)
-{
-  return sum_ranges(detail::make_constant_range(lhs,rhs.size()),rhs);
-} // end operator+()
-
-
-// * case 0
-template<typename Iterator1, typename Iterator2>
-inline __host__ __device__
-  typename detail::multiply_ranges_result<
-    numeric_range<Iterator1>,
-    numeric_range<Iterator2>
-  >::type
-    operator*(const numeric_range<Iterator1> &lhs, const numeric_range<Iterator2> &rhs)
-{
-  return multiply_ranges(lhs,rhs);
-} // end operator*()
-
-// * case 1
-template<typename Iterator, typename Range>
-inline __host__ __device__
-  typename detail::lazy_enable_if_range<
-    Range,
-    detail::multiply_ranges_result<
-      numeric_range<Iterator>,
-      Range
-    >
-  >::type
-    operator*(const numeric_range<Iterator> &lhs, const Range &rhs)
-{
-  return multiply_ranges(lhs,rhs);
-} // end operator*()
-
-// * case 2
-template<typename Range, typename Iterator>
-inline __host__ __device__
-  typename detail::lazy_enable_if_range<
-    Range,
-    detail::multiply_ranges_result<
-      Range,
-      numeric_range<Iterator>
-    >
-  >::type
-    operator*(const Range &lhs, const numeric_range<Iterator> &rhs)
-{
-  return multiply_ranges(lhs,rhs);
-} // end operator*()
-
-// * case 3
-template<typename Iterator, typename Scalar>
-inline __host__ __device__
-  typename detail::lazy_disable_if_range<
-    Scalar,
-    detail::multiply_ranges_result<
-      numeric_range<Iterator>,
-      detail::constant_range<Scalar>
-    >
-  >::type
-    operator*(const numeric_range<Iterator> &lhs, const Scalar &rhs)
-{
-  return multiply_ranges(lhs,detail::make_constant_range(rhs,lhs.size()));
-} // end operator*()
-
-// * case 4
-template<typename Scalar, typename Iterator>
-inline __host__ __device__
-  typename detail::lazy_disable_if_range<
-    Scalar,
-    detail::multiply_ranges_result<
-      detail::constant_range<Scalar>,
-      numeric_range<Iterator>
-    >
-  >::type
-    operator*(const Scalar &lhs, const numeric_range<Iterator> &rhs)
-{
-  return multiply_ranges(detail::make_constant_range(lhs,rhs.size()),rhs);
-} // end operator*()
 
 
 } // end newton
