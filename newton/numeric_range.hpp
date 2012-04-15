@@ -1,4 +1,5 @@
 #include <newton/detail/range.hpp>
+#include <newton/detail/arithmetic.hpp>
 
 namespace newton
 {
@@ -33,6 +34,17 @@ template<typename Iterator>
 };
 
 // XXX arithmetic operators here
+template<typename Iterator1, typename Iterator2>
+inline __host__ __device__
+  typename detail::sum_ranges_result<
+    numeric_range<Iterator1>,
+    numeric_range<Iterator2>
+  >::type
+    operator+(const numeric_range<Iterator1> &lhs, const numeric_range<Iterator2> &rhs)
+{
+  return sum_ranges(lhs,rhs);
+} // end operator+()
+
 
 } // end newton
 

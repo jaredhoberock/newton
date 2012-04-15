@@ -1,0 +1,8 @@
+../newton/detail/range.hpp(99): warning: calling a host function("thrust::detail::vector_base<float, thrust::device_malloc_allocator<float> > ::begin") from a __device__/__global__ function("newton::detail::range<thrust::detail::normal_iterator<thrust::device_ptr<float> > > ::range<thrust::device_vector<float, thrust::device_malloc_allocator<float> > > ") is not allowed
+
+../newton/detail/range.hpp(99): warning: calling a host function("thrust::detail::vector_base<float, thrust::device_malloc_allocator<float> > ::end") from a __device__/__global__ function("newton::detail::range<thrust::detail::normal_iterator<thrust::device_ptr<float> > > ::range<thrust::device_vector<float, thrust::device_malloc_allocator<float> > > ") is not allowed
+
+../newton/detail/range.hpp(99): warning: calling a host function("thrust::detail::vector_base<float, thrust::device_malloc_allocator<float> > ::begin") from a __device__/__global__ function("newton::detail::range<thrust::detail::normal_iterator<thrust::device_ptr<float> > > ::range<thrust::device_vector<float, thrust::device_malloc_allocator<float> > > ") is not allowed
+
+../newton/detail/range.hpp(99): warning: calling a host function("thrust::detail::vector_base<float, thrust::device_malloc_allocator<float> > ::end") from a __device__/__global__ function("newton::detail::range<thrust::detail::normal_iterator<thrust::device_ptr<float> > > ::range<thrust::device_vector<float, thrust::device_malloc_allocator<float> > > ") is not allowed
+

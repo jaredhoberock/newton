@@ -12,6 +12,9 @@ int main()
   typedef thrust::device_vector<float>::iterator iterator;
 
   newton::numeric_range<iterator> x = vec_x;
+  newton::numeric_range<iterator> y = vec_y;
+  
+  x + y;
 
   return 0;
 }

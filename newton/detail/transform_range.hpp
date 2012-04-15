@@ -8,14 +8,14 @@ namespace detail
 {
 
 
-namespace<typename UnaryFunction, typename Iterator>
+template<typename UnaryFunction, typename Iterator>
   class transform_range
     : public newton::detail::range<
         thrust::transform_iterator<UnaryFunction,Iterator>
       >
 {
   private:
-    typedef neweton::detail::range<
+    typedef newton::detail::range<
       thrust::transform_iterator<UnaryFunction,Iterator>
     > super_t;
 
@@ -28,9 +28,16 @@ namespace<typename UnaryFunction, typename Iterator>
 
     template<typename Range>
     inline __host__ __device__
+    transform_range(Range &rng, UnaryFunction f)
+      : super_t(thrust::make_transform_iterator(adl_begin(rng), f),
+                thrust::make_transform_iterator(adl_end(rng), f))
+    {}
+
+    template<typename Range>
+    inline __host__ __device__
     transform_range(const Range &rng, UnaryFunction f)
-      : super_t(thrust::make_transform_iterator(begin(rng), f),
-                thrust::make_transform_iterator(end(rng), f))
+      : super_t(thrust::make_transform_iterator(adl_begin(rng), f),
+                thrust::make_transform_iterator(adl_end(rng), f))
     {}
 };
 
