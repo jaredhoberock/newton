@@ -1,6 +1,5 @@
+#include <newton/newton.hpp>
 #include <thrust/device_vector.h>
-#include <newton/numeric_range.hpp>
-#include <newton/numeric_vector.hpp>
 #include <thrust/copy.h>
 #include <iostream>
 #include <iterator>
