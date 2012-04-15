@@ -40,6 +40,14 @@ template<typename Iterator>
     {}
 };
 
+template<typename Iterator>
+inline __host__ __device__
+  numeric_range<Iterator>
+    make_numeric_range(Iterator first, Iterator last)
+{
+  return numeric_range<Iterator>(first,last);
+}
+
 template<typename Range>
 inline __host__ __device__
   numeric_range<typename detail::range_iterator<Range> >
