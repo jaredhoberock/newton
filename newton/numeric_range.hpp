@@ -1,4 +1,6 @@
-#include <newton/detail/range.hpp>
+#pragma once
+
+#include <newton/detail/range/range.hpp>
 #include <newton/detail/arithmetic.hpp>
 
 namespace newton
@@ -33,7 +35,7 @@ template<typename Iterator>
     {}
 };
 
-// XXX arithmetic operators here
+// arithmetic operators follow
 template<typename Iterator1, typename Iterator2>
 inline __host__ __device__
   typename detail::sum_ranges_result<

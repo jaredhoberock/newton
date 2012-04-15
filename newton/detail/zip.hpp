@@ -1,4 +1,6 @@
-#include <newton/detail/zip_range.hpp>
+#pragma once
+
+#include <newton/detail/range/zip_range.hpp>
 #include <thrust/tuple.h>
 #include <thrust/iterator/zip_iterator.h>
 

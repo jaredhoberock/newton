@@ -1,5 +1,7 @@
+#pragma once
+
 #include <thrust/iterator/zip_iterator.h>
-#include <newton/detail/range.hpp>
+#include <newton/detail/range/range.hpp>
 
 namespace newton
 {

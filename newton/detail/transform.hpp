@@ -1,7 +1,7 @@
 #pragma once
 
-#include <newton/detail/type_traits.hpp>
-#include <newton/detail/transform_range.hpp>
+#include <newton/detail/range/type_traits.hpp>
+#include <newton/detail/range/transform_range.hpp>
 
 namespace newton
 {

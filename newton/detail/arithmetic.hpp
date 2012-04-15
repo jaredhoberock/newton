@@ -1,6 +1,6 @@
 #pragma once
 
-#include <newton/detail/type_traits.hpp>
+#include <newton/detail/range/type_traits.hpp>
 #include <newton/detail/zip_with.hpp>
 #include <thrust/functional.h>
 
