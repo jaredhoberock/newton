@@ -190,9 +190,17 @@ template<typename Range>
 
 template<typename Range>
   struct range_value
-{
-  typedef typename Range::value_type type;
-};
+    : thrust::iterator_value<
+        typename range_iterator<Range>::type
+      >
+{};
+
+template<typename Range>
+  struct range_difference
+    : thrust::iterator_difference<
+        typename range_iterator<Range>::type
+      >
+{};
 
 } // end detail
 } // end newton

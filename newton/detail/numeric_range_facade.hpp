@@ -1,6 +1,7 @@
 #pragma once
 
 #include <newton/detail/range/range_traits.hpp>
+#include <newton/detail/range/range.hpp>
 #include <newton/detail/arithmetic.hpp>
 #include <newton/detail/range/constant_range.hpp>
 
@@ -95,7 +96,7 @@ inline __host__ __device__
   >::type
     operator+(const detail::numeric_range_facade<Derived> &lhs, const Scalar &rhs)
 {
-  return sum_ranges(lhs.derived(),detail::make_constant_range(rhs,lhs.derived().size()));
+  return sum_ranges(lhs.derived(),detail::make_constant_range(rhs,size(lhs.derived())));
 } // end operator+()
 
 // + case 4
@@ -110,7 +111,7 @@ inline __host__ __device__
   >::type
     operator+(const Scalar &lhs, const detail::numeric_range_facade<Derived> &rhs)
 {
-  return sum_ranges(detail::make_constant_range(lhs,rhs.derived().size()),rhs.derived());
+  return sum_ranges(detail::make_constant_range(lhs,size(rhs.derived())),rhs.derived());
 } // end operator+()
 
 
@@ -169,7 +170,7 @@ inline __host__ __device__
   >::type
     operator*(const detail::numeric_range_facade<Derived> &lhs, const Scalar &rhs)
 {
-  return multiply_ranges(lhs.derived(),detail::make_constant_range(rhs,lhs.derived().size()));
+  return multiply_ranges(lhs.derived(),detail::make_constant_range(rhs,size(lhs.derived())));
 } // end operator*()
 
 // * case 4
@@ -184,7 +185,7 @@ inline __host__ __device__
   >::type
     operator*(const Scalar &lhs, const detail::numeric_range_facade<Derived> &rhs)
 {
-  return multiply_ranges(detail::make_constant_range(lhs,rhs.derived().size()),rhs.derived());
+  return multiply_ranges(detail::make_constant_range(lhs,size(rhs.derived())),rhs.derived());
 } // end operator*()
 
 

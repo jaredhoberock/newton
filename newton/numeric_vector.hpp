@@ -41,7 +41,7 @@ template<typename T, typename Allocator = thrust::device_malloc_allocator<T> >
 
     template<typename Range>
     inline numeric_vector(const Range &rng, typename detail::enable_if_range<Range>::type * = 0)
-      : super_t(rng.begin(), rng.end())
+      : super_t(newton::detail::adl_begin(rng), newton::detail::adl_end(rng))
     {}
 
     template<typename InputIterator>

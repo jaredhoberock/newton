@@ -24,6 +24,14 @@ inline __host__ __device__
   return rng.begin();
 }
 
+template<typename T, std::size_t N>
+inline __host__ __device__
+  typename range_iterator<T[N]>::type
+    begin(T (&array)[N])
+{
+  return array;
+}
+
 template<typename Range>
 inline __host__ __device__
   typename range_iterator<Range>::type
@@ -38,6 +46,22 @@ inline __host__ __device__
     end(const Range &rng)
 {
   return rng.end();
+}
+
+template<typename T, std::size_t N>
+inline __host__ __device__
+  typename range_iterator<T[N]>::type
+    end(T (&array)[N])
+{
+  return array + N;
+}
+
+template<typename Range>
+inline __host__ __device__
+  typename newton::detail::range_difference<const Range>::type
+    size(const Range &rng)
+{
+  return end(rng) - begin(rng);
 }
 
 
@@ -137,13 +161,6 @@ template<typename Iterator>
 
   private:
     iterator m_begin, m_end;
-};
-
-// specialize range_iterator for const range<Iterator>
-template<typename Iterator>
-  struct range_iterator<const range<Iterator> >
-{
-  typedef typename range<Iterator>::iterator type;
 };
 
 template<typename Iterator>

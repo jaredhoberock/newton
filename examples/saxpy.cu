@@ -18,7 +18,8 @@ int main()
   newton::numeric_range<iterator> x = d_vec_x;
 
   // create a numeric_vector (a container) from h_vec_y
-  newton::numeric_vector<float> y(h_vec_y, h_vec_y + 4);
+  // by default, numeric_vector is associated with thrust's device system
+  newton::numeric_vector<float> y = h_vec_y;
 
   const float a = 2.0f;
   
