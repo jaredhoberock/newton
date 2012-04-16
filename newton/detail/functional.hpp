@@ -13,14 +13,14 @@ namespace detail
 inline __host__ __device__
 float abs(float x)
 {
-  return ::absf(x);
+  return ::fabs(x);
 }
 
 template<typename T>
 inline __host__ __device__
 T abs(T x)
 {
-  return x < 0 : -x : x;
+  return x < 0 ? -x : x;
 }
 
 template<typename T>
