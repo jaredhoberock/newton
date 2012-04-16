@@ -71,6 +71,18 @@ template<typename T>
 };
 
 
+template<typename T>
+  struct arc_tangent2
+    : thrust::binary_function<T,T,T>
+{
+  inline __host__ __device__
+  T operator()(const T &x, const T &y) const
+  {
+    return atan2(x,y);
+  }
+};
+
+
 } // end detail
 } // end newton
 
