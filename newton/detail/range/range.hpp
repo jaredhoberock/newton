@@ -2,59 +2,12 @@
 
 #include <thrust/iterator/iterator_traits.h>
 #include <newton/detail/range/range_traits.hpp>
+#include <newton/detail/range/begin_end.hpp>
 
 namespace newton
 {
 namespace detail
 {
-
-template<typename Range>
-inline __host__ __device__
-  typename newton::detail::range_iterator<Range>::type
-    begin(Range &rng)
-{
-  return rng.begin();
-}
-
-template<typename Range>
-inline __host__ __device__
-  typename range_iterator<const Range>::type
-    begin(const Range &rng)
-{
-  return rng.begin();
-}
-
-template<typename T, std::size_t N>
-inline __host__ __device__
-  typename range_iterator<T[N]>::type
-    begin(T (&array)[N])
-{
-  return array;
-}
-
-template<typename Range>
-inline __host__ __device__
-  typename range_iterator<Range>::type
-    end(Range &rng)
-{
-  return rng.end();
-}
-
-template<typename Range>
-inline __host__ __device__
-  typename range_iterator<const Range>::type
-    end(const Range &rng)
-{
-  return rng.end();
-}
-
-template<typename T, std::size_t N>
-inline __host__ __device__
-  typename range_iterator<T[N]>::type
-    end(T (&array)[N])
-{
-  return array + N;
-}
 
 template<typename Range>
 inline __host__ __device__
@@ -64,9 +17,8 @@ inline __host__ __device__
   return end(rng) - begin(rng);
 }
 
-
 // helpers to dispatch begin & end via adl
-// when in the presence of a similarly-named overload
+// when in the scope of a similarly-named overload
 template<typename Range>
 inline __host__ __device__
   typename range_iterator<Range>::type
