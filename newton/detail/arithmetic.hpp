@@ -1,7 +1,7 @@
 #pragma once
 
 #include <newton/detail/range/type_traits.hpp>
-#include <newton/detail/zip_with.hpp>
+#include <newton/detail/transform.hpp>
 #include <thrust/functional.h>
 
 namespace newton
@@ -15,7 +15,7 @@ template<typename Range1, typename Range2>
   typedef typename range_value<Range1>::type value_type1;
 
   public:
-    typedef typename zip_with2_result<const Range1, const Range2, thrust::plus<value_type1> >::type type;
+    typedef typename transform2_result<const Range1, const Range2, thrust::plus<value_type1> >::type type;
 };
 
 template<typename Range1, typename Range2>
@@ -25,7 +25,7 @@ template<typename Range1, typename Range2>
 {
   typedef typename range_value<Range1>::type value_type1;
 
-  return zip_with(lhs, rhs, thrust::plus<value_type1>());
+  return transform(lhs, rhs, thrust::plus<value_type1>());
 }
 
 
@@ -35,7 +35,7 @@ template<typename Range1, typename Range2>
   typedef typename range_value<Range1>::type value_type1;
 
   public:
-    typedef typename zip_with2_result<const Range1, const Range2, thrust::multiplies<value_type1> >::type type;
+    typedef typename transform2_result<const Range1, const Range2, thrust::multiplies<value_type1> >::type type;
 };
 
 template<typename Range1, typename Range2>
@@ -45,7 +45,7 @@ template<typename Range1, typename Range2>
 {
   typedef typename range_value<Range1>::type value_type1;
 
-  return zip_with(lhs, rhs, thrust::multiplies<value_type1>());
+  return transform(lhs, rhs, thrust::multiplies<value_type1>());
 }
 
 
