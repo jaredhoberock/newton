@@ -1,6 +1,6 @@
 #pragma once
 
-#include <newton/detail/range/type_traits.hpp>
+#include <newton/detail/range/range_traits.hpp>
 #include <newton/detail/functional.hpp>
 #include <newton/detail/range/constant_range.hpp>
 

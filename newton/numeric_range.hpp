@@ -2,7 +2,7 @@
 
 #include <newton/detail/range/range.hpp>
 #include <newton/detail/numeric_range_facade.hpp>
-#include <newton/detail/range/type_traits.hpp>
+#include <newton/detail/range/range_traits.hpp>
 #include <newton/detail/arithmetic.hpp>
 #include <newton/detail/range/constant_range.hpp>
 

@@ -2,7 +2,7 @@
 
 #include <newton/detail/range/range.hpp>
 #include <thrust/iterator/transform_iterator.h>
-#include <newton/detail/range/type_traits.hpp>
+#include <newton/detail/range/range_traits.hpp>
 
 namespace newton
 {

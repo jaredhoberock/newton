@@ -55,12 +55,37 @@ template<typename Range>
       >
 {};
 
+template<typename T, std::size_t sz>
+  struct range_const_iterator<T[sz]>
+{
+  typedef const T* type;
+};
+
+
+template<typename Range>
+  struct range_mutable_iterator
+    : nested_iterator<Range>
+{};
+
+
+template<typename T, std::size_t sz>
+  struct range_mutable_iterator<T[sz]>
+{
+  typedef T* type;
+};
+
+
 } // end type_traits_detail
 
 
 template<typename T>
   struct is_range
     : type_traits_detail::has_iterator<T>
+{};
+
+template<typename T, std::size_t sz>
+  struct is_range<T[sz]>
+    : thrust::detail::true_type
 {};
 
 template<typename T>
@@ -154,17 +179,14 @@ template<typename T, typename Result>
 
 template<typename Range>
   struct range_iterator
-{
-  typedef typename Range::iterator type;
-};
-
-// for const Ranges, we need to return the const_iterator
-// type, if it exists
-template<typename Range>
-  struct range_iterator<const Range>
-    : type_traits_detail::range_const_iterator<Range>
-{
-};
+    : thrust::detail::eval_if<
+        thrust::detail::is_const<Range>::value,
+        type_traits_detail::range_const_iterator<
+          typename thrust::detail::remove_const<Range>::type
+        >,
+        type_traits_detail::range_mutable_iterator<Range>
+      >
+{};
 
 template<typename Range>
   struct range_value

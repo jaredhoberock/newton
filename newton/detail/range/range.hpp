@@ -1,7 +1,7 @@
 #pragma once
 
 #include <thrust/iterator/iterator_traits.h>
-#include <newton/detail/range/type_traits.hpp>
+#include <newton/detail/range/range_traits.hpp>
 
 namespace newton
 {
