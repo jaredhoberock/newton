@@ -63,6 +63,13 @@ template<typename T>
     : type_traits_detail::has_iterator<T>
 {};
 
+template<typename T>
+  struct is_not_range
+    : thrust::detail::integral_constant<
+        bool,
+        !is_range<T>::value
+      >
+{};
 
 template<typename T, typename Result = void>
   struct enable_if_range
@@ -72,10 +79,58 @@ template<typename T, typename Result = void>
       >
 {};
 
+template<typename T1, typename T2, typename Result = void>
+  struct enable_if_ranges
+    : detail::enable_if<
+        is_range<T1>::value && is_range<T2>::value,
+        Result
+      >
+{};
+
+template<typename T1, typename T2, typename Result = void>
+  struct enable_if_range_and_scalar
+    : detail::enable_if<
+        is_range<T1>::value && is_not_range<T2>::value,
+        Result
+      >
+{};
+
+template<typename T1, typename T2, typename Result = void>
+  struct enable_if_scalar_and_range
+    : detail::enable_if<
+        is_not_range<T1>::value && is_range<T2>::value,
+        Result
+      >
+{};
+
 template<typename T, typename Result>
   struct lazy_enable_if_range
     : detail::lazy_enable_if<
         is_range<T>::value,
+        Result
+      >
+{};
+
+template<typename T1, typename T2, typename Result>
+  struct lazy_enable_if_ranges
+    : detail::lazy_enable_if<
+        is_range<T1>::value && is_range<T2>::value,
+        Result
+      >
+{};
+
+template<typename T1, typename T2, typename Result>
+  struct lazy_enable_if_range_and_scalar
+    : detail::lazy_enable_if<
+        is_range<T1>::value && is_not_range<T2>::value,
+        Result
+      >
+{};
+
+template<typename T1, typename T2, typename Result>
+  struct lazy_enable_if_scalar_and_range
+    : detail::lazy_enable_if<
+        is_not_range<T1>::value && is_range<T2>::value,
         Result
       >
 {};
