@@ -107,7 +107,7 @@ float log10(float x)
 inline __host__ __device__
 float pow(float x, float y)
 {
-  return powf(x);
+  return powf(x,y);
 } // pow()
 
 
