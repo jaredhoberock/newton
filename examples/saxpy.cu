@@ -20,9 +20,9 @@ int main()
 
   const float a = 2.0f;
 
-  // importing this namespace enables range arithmetic on device_vector
+  // importing this namespace enables arithmetic on ranges like device_vector
   // numeric_vector has arithmetic operators either way
-  using namespace newton;
+  using namespace newton::ops;
   
   // saxpy to y 
   y = a * x + y;

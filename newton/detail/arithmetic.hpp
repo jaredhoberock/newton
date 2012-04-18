@@ -21,6 +21,9 @@ template<typename RangeOrScalar>
 
 } // end detail
 
+namespace ops
+{
+
 
 #define __NEWTON_DEFINE_RANGE_BINARY_OPERATOR(op, functor) \
 template<typename RangeOrScalar1, typename RangeOrScalar2> \
@@ -42,6 +45,11 @@ inline __host__ __device__ \
 __NEWTON_DEFINE_RANGE_BINARY_OPERATOR(+, thrust::plus);
 __NEWTON_DEFINE_RANGE_BINARY_OPERATOR(*, thrust::multiplies);
 
+
+} // end ops
+
+
+using namespace ops;
 
 } // end newton
 
