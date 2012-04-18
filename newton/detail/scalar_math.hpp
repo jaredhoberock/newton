@@ -63,6 +63,12 @@ float cos(float x)
 
 
 inline __host__ __device__
+float erf(float x)
+{
+  return erff(x);
+} // end erf()
+
+inline __host__ __device__
 float exp(float x)
 {
   return expf(x);

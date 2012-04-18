@@ -179,6 +179,24 @@ inline __host__ __device__
     NumericRange,
     detail::transform1_result<
       const NumericRange,
+      detail::error_function<
+        typename detail::range_value<NumericRange>::type
+      >
+    >
+  >::type
+    erf(const NumericRange &rng)
+{
+  typedef typename detail::range_value<NumericRange>::type value_type;
+  return detail::transform(rng, detail::error_function<value_type>());
+} // end erf
+
+
+template<typename NumericRange>
+inline __host__ __device__
+  typename detail::lazy_enable_if_range<
+    NumericRange,
+    detail::transform1_result<
+      const NumericRange,
       detail::exponential<
         typename detail::range_value<NumericRange>::type
       >

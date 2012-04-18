@@ -82,6 +82,18 @@ template<typename T>
 
 
 template<typename T>
+  struct error_function
+    : thrust::unary_function<T,T>
+{
+  inline __host__ __device__
+  T operator()(const T &x) const
+  {
+    return erf(x);
+  }
+}; // end error_function
+
+
+template<typename T>
   struct exponential
     : thrust::unary_function<T,T>
 {
