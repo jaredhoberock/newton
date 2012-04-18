@@ -104,6 +104,28 @@ float log10(float x)
 } // log10()
 
 
+template<typename T>
+inline __host__ __device__
+T mod(T numerator, T denominator)
+{
+  return numerator % denominator;
+} // end mod()
+
+
+inline __host__ __device__
+double mod(double numerator, double denominator)
+{
+  return fmod(numerator,denominator);
+} // end mod()
+
+
+inline __host__ __device__
+float mod(float numerator, float denominator)
+{
+  return fmod(numerator,denominator);
+} // end mod()
+
+
 inline __host__ __device__
 float pow(float x, float y)
 {
