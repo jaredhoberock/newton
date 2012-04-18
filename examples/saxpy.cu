@@ -7,21 +7,22 @@
 int main()
 {
   // initialize host arrays
-  float h_vec_x[4] = {1.0, 1.0, 1.0, 1.0};
-  float h_vec_y[4] = {1.0, 2.0, 3.0, 4.0};
+  float h_x[4] = {1.0, 1.0, 1.0, 1.0};
+  float h_y[4] = {1.0, 2.0, 3.0, 4.0};
 
-  thrust::device_vector<float> d_vec_x(h_vec_x,h_vec_x + 4);
+  thrust::device_vector<float> x(h_x,h_x + 4);
 
   typedef thrust::device_vector<float>::iterator iterator;
 
-  // create a numeric "view" vector of vector x
-  newton::numeric_range<iterator> x = d_vec_x;
-
-  // create a numeric_vector (a container) from h_vec_y
+  // create a numeric_vector (a container) from h_y
   // by default, numeric_vector is associated with thrust's device system
-  newton::numeric_vector<float> y = h_vec_y;
+  newton::numeric_vector<float> y = h_y;
 
   const float a = 2.0f;
+
+  // importing this namespace enables range arithmetic on device_vector
+  // numeric_vector has arithmetic operators either way
+  using namespace newton;
   
   // saxpy to y 
   y = a * x + y;

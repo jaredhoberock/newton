@@ -2,7 +2,7 @@
 
 #include <thrust/detail/vector_base.h>
 #include <thrust/device_malloc_allocator.h>
-#include <newton/detail/numeric_range_facade.hpp>
+#include <newton/detail/arithmetic.hpp>
 #include <newton/detail/type_traits.hpp>
 #include <vector>
 
@@ -17,8 +17,7 @@ namespace newton
 //     see http://stackoverflow.com/questions/7218574/avoiding-default-construction-of-elements-in-standard-containers
 template<typename T, typename Allocator = thrust::device_malloc_allocator<T> >
   class numeric_vector
-    : public thrust::detail::vector_base<T,Allocator>,
-      public newton::detail::numeric_range_facade<numeric_vector<T,Allocator> >
+    : public thrust::detail::vector_base<T,Allocator>
 {
   private:
     typedef thrust::detail::vector_base<T,Allocator> super_t;

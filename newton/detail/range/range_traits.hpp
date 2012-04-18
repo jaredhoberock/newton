@@ -128,6 +128,14 @@ template<typename T1, typename T2, typename Result = void>
       >
 {};
 
+template<typename T1, typename T2, typename Result = void>
+  struct enable_if_at_least_one_is_range
+    : detail::enable_if<
+        is_range<T1>::value || is_range<T2>::value,
+        Result
+      >
+{};
+
 template<typename T, typename Result>
   struct lazy_enable_if_range
     : detail::lazy_enable_if<
@@ -156,6 +164,14 @@ template<typename T1, typename T2, typename Result>
   struct lazy_enable_if_scalar_and_range
     : detail::lazy_enable_if<
         is_not_range<T1>::value && is_range<T2>::value,
+        Result
+      >
+{};
+
+template<typename T1, typename T2, typename Result>
+  struct lazy_enable_if_at_least_one_is_range
+    : detail::lazy_enable_if<
+        is_range<T1>::value || is_range<T2>::value,
         Result
       >
 {};

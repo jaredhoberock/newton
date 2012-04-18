@@ -136,6 +136,39 @@ range<typename range_iterator<const Range>::type> make_range(const Range &rng)
   return range<typename range_iterator<const Range>::type>(rng);
 }
 
+template<typename Range, typename Size>
+__host__ __device__
+range<typename range_iterator<Range>::type>
+  slice(Range &rng, Size first, Size last)
+{
+  return make_range(begin(rng) + first, begin(rng) + last);
+}
+
+template<typename Range, typename Size>
+__host__ __device__
+range<typename range_iterator<const Range>::type>
+  slice(const Range &rng, Size first, Size last)
+{
+  return make_range(begin(rng) + first, begin(rng) + last);
+}
+
+template<typename Range, typename Size>
+__host__ __device__
+range<typename range_iterator<Range>::type>
+  take(Range &rng, Size n)
+{
+  return slice(rng, Size(0), n);
+}
+
+template<typename Range, typename Size>
+__host__ __device__
+range<typename range_iterator<const Range>::type>
+  take(const Range &rng, Size n)
+{
+  return slice(rng, Size(0), n);
+}
+
+
 } // end detail
 } // end newton
 

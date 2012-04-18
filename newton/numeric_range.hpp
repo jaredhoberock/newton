@@ -1,7 +1,6 @@
 #pragma once
 
 #include <newton/detail/range/range.hpp>
-#include <newton/detail/numeric_range_facade.hpp>
 #include <newton/detail/range/range_traits.hpp>
 #include <newton/detail/arithmetic.hpp>
 #include <newton/detail/range/constant_range.hpp>
@@ -13,8 +12,7 @@ namespace newton
 // XXX assumes is_arithmetic<typename value_type<Iterator>::type>
 template<typename Iterator>
   class numeric_range
-    : public newton::detail::range<Iterator>,
-      public detail::numeric_range_facade<numeric_range<Iterator> >
+    : public newton::detail::range<Iterator>
 {
   private:
     typedef newton::detail::range<Iterator> super_t;
