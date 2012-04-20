@@ -66,6 +66,54 @@ template<typename T, typename Allocator = thrust::device_malloc_allocator<T> >
     }
 }; // end numeric_vector
 
+template<typename T, typename Allocator>
+__host__ __device__
+inline typename numeric_vector<T,Allocator>::iterator
+  begin(numeric_vector<T,Allocator> &rng)
+{
+#if __CUDA_ARCH__
+  return typename numeric_vector<T,Allocator>::iterator();
+#else
+  return rng.begin();
+#endif
+}
+
+template<typename T, typename Allocator>
+__host__ __device__
+inline typename numeric_vector<T,Allocator>::const_iterator
+  begin(const numeric_vector<T,Allocator> &rng)
+{
+#if __CUDA_ARCH__
+  return typename numeric_vector<T,Allocator>::const_iterator();
+#else
+  return rng.begin();
+#endif
+}
+
+template<typename T, typename Allocator>
+__host__ __device__
+inline typename numeric_vector<T,Allocator>::iterator
+  end(numeric_vector<T,Allocator> &rng)
+{
+#if __CUDA_ARCH__
+  return typename numeric_vector<T,Allocator>::iterator();
+#else
+  return rng.end();
+#endif
+}
+
+template<typename T, typename Allocator>
+__host__ __device__
+inline typename numeric_vector<T,Allocator>::const_iterator
+  end(const numeric_vector<T,Allocator> &rng)
+{
+#if __CUDA_ARCH__
+  return typename numeric_vector<T,Allocator>::const_iterator();
+#else
+  return rng.end();
+#endif
+}
+
 
 } // end newton
 

@@ -117,6 +117,22 @@ template<typename Iterator>
 
 template<typename Iterator>
 __host__ __device__
+typename range<Iterator>::iterator
+  begin(const range<Iterator> &rng)
+{
+  return rng.begin();
+}
+
+template<typename Iterator>
+__host__ __device__
+typename range<Iterator>::iterator
+  end(const range<Iterator> &rng)
+{
+  return rng.end();
+}
+
+template<typename Iterator>
+__host__ __device__
 range<Iterator> make_range(Iterator first, Iterator last)
 {
   return range<Iterator>(first,last);
