@@ -26,10 +26,7 @@ void black_scholes(const thrust::device_vector<float> &stock_price,
   auto d1 = (log(stock_price / option_strike) + (riskless_rate + 0.5f * volatility * volatility) * option_years) / (volatility * sqrt_option_years);
   auto d2 = d1 - volatility * sqrt_option_years;
 
-  // calculate call and put simultaneously
   auto expRT = exp(-riskless_rate * option_years);
-
-  cnd(d1);
 
   // we receive results as numeric_vector so that we can assign the result of numeric expressions to them
   call_result = stock_price * cnd(d1) - option_strike * expRT * cnd(d2);
