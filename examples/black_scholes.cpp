@@ -6,7 +6,7 @@ static const float inv_sqrt2 = sqrt(2.);
 template<typename T>
 inline __host__ __device__
   auto cnd(const T &x)
-    -> decltype(0.5f * (1.f + erf(inv_sqrt2 * x)));
+    -> decltype(0.5f * (1.f + erf(inv_sqrt2 * x)))
 {
   return 0.5f * (1.f + erf(inv_sqrt2 * x));
 }
@@ -19,7 +19,8 @@ void black_scholes(const thrust::device_vector<float> &stock_price,
                    newton::numeric_vector<float> &call_result,
                    newton::numeric_vector<float> &put_result)
 {
-  using namespace newton::detail;
+  // to apply math functions on device_vector, 
+  // we can use a using namespace newton directive
   using namespace newton;
 
   auto sqrt_option_years = sqrt(option_years);

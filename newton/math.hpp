@@ -391,6 +391,32 @@ inline __host__ __device__
   return detail::transform(rng, detail::hyperbolic_tangent<value_type>());
 } // end tanh
 
+// mirror these functions in namespace detail so that they are
+// available to intermediate range expressions such as
+// detail::transform_range and detail::constant_range
+namespace detail
+{
+
+using newton::abs;
+using newton::acos;
+using newton::asin;
+using newton::atan;
+using newton::atan2;
+using newton::cos;
+using newton::cosh;
+using newton::erf;
+using newton::exp;
+using newton::log;
+using newton::log10;
+using newton::pow;
+using newton::sin;
+using newton::sinh;
+using newton::sqrt;
+using newton::tan;
+using newton::tanh;
+
+} // end detail
+
 
 } // end newton
 

@@ -38,9 +38,6 @@ template<typename T>
 
 } // end detail
 
-namespace ops
-{
-
 
 #define __NEWTON_DEFINE_RANGE_BINARY_OPERATOR(op, functor) \
 template<typename RangeOrScalar1, typename RangeOrScalar2> \
@@ -105,11 +102,69 @@ __NEWTON_DEFINE_RANGE_BINARY_OPERATOR(&,  thrust::bit_and);
 __NEWTON_DEFINE_RANGE_BINARY_OPERATOR(|,  thrust::bit_or);
 __NEWTON_DEFINE_RANGE_BINARY_OPERATOR(^,  thrust::bit_xor);
 
+// put these in namespace ops so that the user can easily make
+// arithmetic available to all ranges with a single using directive
+namespace ops
+{
 
-} // end ops
+// arithmetic
+using newton::operator/;
+using newton::operator-;
+using newton::operator%;
+using newton::operator*;
+using newton::operator+;
 
+// relational
+using newton::operator==;
+using newton::operator>;
+using newton::operator>=;
+using newton::operator<;
+using newton::operator<=;
+using newton::operator!=;
 
-using namespace ops;
+// logical
+using newton::operator~;
+using newton::operator&&;
+using newton::operator||;
 
-} // end newton
+// bitwise
+using newton::operator&;
+using newton::operator|;
+using newton::operator^;
+
+} // end namespace ops
+
+// put these in namespace detail so that arithmetic is
+// available to detail::transform_range and detail::constant_range
+namespace detail
+{
+
+// arithmetic
+using newton::operator/;
+using newton::operator-;
+using newton::operator%;
+using newton::operator*;
+using newton::operator+;
+
+// relational
+using newton::operator==;
+using newton::operator>;
+using newton::operator>=;
+using newton::operator<;
+using newton::operator<=;
+using newton::operator!=;
+
+// logical
+using newton::operator~;
+using newton::operator&&;
+using newton::operator||;
+
+// bitwise
+using newton::operator&;
+using newton::operator|;
+using newton::operator^;
+
+} // end namespace detail
+
+} // end namespace newton
 
