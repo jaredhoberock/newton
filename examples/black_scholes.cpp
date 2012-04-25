@@ -30,6 +30,8 @@ void black_scholes(const thrust::device_vector<float> &stock_price,
   auto expRT = exp(-riskless_rate * option_years);
 
   // we receive results as numeric_vector so that we can assign the result of numeric expressions to them
+  // note that all of the operations above and below are "fused" into two kernels which are evaluated on
+  // each of the two assignments below
   call_result = stock_price * cnd(d1) - option_strike * expRT * cnd(d2);
   put_result  = option_strike * expRT * (1.0f - cnd(d2)) - stock_price * (1.0f - cnd(d1));
 }
