@@ -12,8 +12,6 @@ int main()
 
   thrust::device_vector<float> x(h_x,h_x + 4);
 
-  typedef thrust::device_vector<float>::iterator iterator;
-
   // create a numeric_vector (a container) from h_y
   // by default, numeric_vector is associated with thrust's device system
   newton::numeric_vector<float> y = h_y;
