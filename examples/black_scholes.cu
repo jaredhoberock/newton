@@ -1,7 +1,8 @@
 #include <newton/newton.hpp>
 #include <thrust/device_vector.h>
 
-static const float inv_sqrt2 = 1.f / sqrt(2.);
+static constexpr float sqrt2 = 1.41421356237; 
+static constexpr float inv_sqrt2 = 1.f / sqrt2;
 
 template<typename T>
 inline __host__ __device__

@@ -168,7 +168,7 @@ template<typename T1, typename T2, typename Result>
       >
 {};
 
-template<typename T1, typename T2, typename Result>
+template<typename T1, typename T2, typename Result = thrust::detail::identity_<void>>
   struct lazy_enable_if_at_least_one_is_range
     : detail::lazy_enable_if<
         is_range<T1>::value || is_range<T2>::value,
